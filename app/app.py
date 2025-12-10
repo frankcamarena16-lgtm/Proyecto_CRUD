@@ -13,7 +13,8 @@ def crear_base_de_datos():
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     titulo TEXT NOT NULL,
                     año TEXT NOT NULL,
-                    genero TEXT NOT NULL
+                    genero TEXT NOT NULL,
+                    en_cartelera INTEGER DEFAULT 0
                     )
                 """)
     database.commit()
