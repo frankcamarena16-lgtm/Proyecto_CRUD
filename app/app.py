@@ -29,7 +29,7 @@ def crear_base_de_datos():
                     )
                 """)
     database.commit()
-    # Comprobar si la columna 'en_cartelera' existe; si no, agregarla (para migraciones)
+    # Comprobar si la columna 'en_cartelera' existe; si no, agregarla
     cursor.execute("PRAGMA table_info(peliculas)")
     cols = [row[1] for row in cursor.fetchall()]
     if 'en_cartelera' not in cols:
@@ -39,53 +39,88 @@ def crear_base_de_datos():
     database.close()
 
 crear_base_de_datos()
-@app.route("/insertar_demo")
-def insertar_demo():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO peliculas (titulo, año, genero, en_cartelera)
-        VALUES
-        ('The Shawshank Redemption', 1994, 'Drama', 1),
-        ('The Dark Knight', 2008, 'Acción', 1),
-        ('Interstellar', 2014, 'Ciencia Ficción', 0),
-        ('Inception', 2010, 'Ciencia Ficción', 0),
-        ('Pulp Fiction', 1994, 'Crimen', 1)
-    """)
-    conn.commit()
-    conn.close()
-    return "Películas insertadas 👍"
 
 # <-- Página principal -->
 @app.route("/")
 def inicio():
     conn = get_db_connection()
-    
-
-    peliculas_data = conn.execute('SELECT id, titulo, año, genero, en_cartelera FROM peliculas ORDER BY año DESC').fetchall()
+    peliculas_data = conn.execute('SELECT id, titulo, año, genero, en_cartelera FROM peliculas').fetchall()
     conn.close()
 
-    peliculas = []     
-    cartelera = []  
-    antiguas = []   
+    cartelera = []
+    antiguas = []
 
     for p in peliculas_data:
-
-        peliculas.append((p['id'], p['titulo'], p['año'], p['genero'])) 
         if p['en_cartelera'] == 1:
             cartelera.append(p)
         else:
             antiguas.append(p)
 
-    return render_template('index.html', peliculas=peliculas, cartelera=cartelera, antiguas=antiguas)
+    return render_template(
+        'index.html',
+        peliculas=peliculas_data,  # TODAS solo para la tabla
+        cartelera=cartelera,       # Solo cartelera
+        antiguas=antiguas          # Solo antiguas
+    )
+
 
 @app.route('/agregar')
 def agregar():
     return render_template('agregar.html')
 
-@app.route('/editar')
-def editar():
-    return render_template('editar.html')
+@app.route('/guardar', methods=['POST'])
+def guardar():
+    titulo = request.form['titulo']
+    año = request.form['año']
+    genero = request.form['genero']
+    en_cartelera = 1 if 'en_cartelera' in request.form else 0
+    
+    conn = get_db_connection()
+    conn.execute("""
+        INSERT INTO peliculas (titulo, año, genero, en_cartelera) 
+        VALUES (?, ?, ?, ?)
+    """, (titulo, año, genero, en_cartelera))
+    conn.commit()
+    conn.close()
+    
+    return redirect('/')
+
+@app.route('/editar/<int:id>')
+def editar(id):
+    conn = get_db_connection()
+    pelicula = conn.execute('SELECT * FROM peliculas WHERE id = ?', (id,)).fetchone()
+    conn.close()
+    if pelicula is None:
+        return "Película no encontrada", 404
+
+    return render_template('editar.html', pelicula=pelicula)
+
+@app.route('/editar/<int:id>', methods=['POST'])
+def actualizar(id):
+    titulo = request.form['titulo']
+    año = request.form['año']
+    genero = request.form['genero']
+    en_cartelera = 1 if 'en_cartelera' in request.form else 0
+
+    conn = get_db_connection()
+    conn.execute("""
+        UPDATE peliculas 
+        SET titulo = ?, año = ?, genero = ?, en_cartelera = ?
+        WHERE id = ?
+    """, (titulo, año, genero, en_cartelera, id))
+    conn.commit()
+    conn.close()
+
+    return redirect('/')
+
+@app.route('/eliminar/<int:id>')
+def eliminar(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM peliculas WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    
+    return redirect('/')
     
 if __name__ == '__main__':
     app.run(debug=True)

@@ -41,19 +41,26 @@
 
 <table>
     <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Año</th>
-        <th>Género</th>
-        <th>Acciones</th>
-    </tr>
-
+    <th>ID</th>
+    <th>Título</th>
+    <th>Año</th>
+    <th>Género</th>
+    <th>Estado</th>
+    <th>Acciones</th>
+</tr>
 {% for p in peliculas %}
 <tr>
-    <td>{{ p[0] }}</td>  <td>{{ p[1] }}</td>  <td>{{ p[2] }}</td>  <td>{{ p[3] }}</td>  <td>
-        <a class="btn-edit" href="{{ url_for('editar', id=p[0]) }}">✏️ Editar</a> 
-        
-        <a class="btn-delete" href="/eliminar/{{ p[0] }}" onclick="return confirm('¿Estás seguro de eliminar esta película?')">🗑️ Eliminar</a>
+    <td>{{ p[0] }}</td>
+    <td>{{ p[1] }}</td>
+    <td>{{ p[2] }}</td>
+    <td>{{ p[3] }}</td>
+    <td>{% if p[4] == 1 %}🔥 Cartelera{% else %}⭐ Clásica{% endif %}</td>
+    <td>
+        <a href="/editar/{{ p[0] }}">✏️ Editar</a>
+        <a class="btn-delete" href="/eliminar/{{ p[0] }}" 
+            onclick="return confirm('¿Estás seguro de eliminar esta película?')">
+            🗑️ Eliminar
+        </a>
     </td>
 </tr>
 {% endfor %}

@@ -2,44 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Película</title>
+    <title>Editar película</title>
 </head>
 <body>
-    <div class="container">
-        <h1>✏️ Editar Película</h1>
-        
-        <form action="/actualizar/{{ pelicula[0] }}" method="POST">
-            <div class="form-group">
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" value="{{ pelicula[1] }}" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="año">Año:</label>
-                <input type="text" id="año" name="año" value="{{ pelicula[2] }}" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="genero">Género:</label>
-                <select id="genero" name="genero" required>
-                    <option value="Acción" {% if pelicula[3] == 'Acción' %}selected{% endif %}>Acción</option>
-                    <option value="Aventura" {% if pelicula[3] == 'Aventura' %}selected{% endif %}>Aventura</option>
-                    <option value="Comedia" {% if pelicula[3] == 'Comedia' %}selected{% endif %}>Comedia</option>
-                    <option value="Drama" {% if pelicula[3] == 'Drama' %}selected{% endif %}>Drama</option>
-                    <option value="Terror" {% if pelicula[3] == 'Terror' %}selected{% endif %}>Terror</option>
-                    <option value="Sci-Fi" {% if pelicula[3] == 'Sci-Fi' %}selected{% endif %}>Sci-Fi</option>
-                    <option value="Romance" {% if pelicula[3] == 'Romance' %}selected{% endif %}>Romance</option>
-                    <option value="Animación" {% if pelicula[3] == 'Animación' %}selected{% endif %}>Animación</option>
-                    <option value="Thriller" {% if pelicula[3] == 'Thriller' %}selected{% endif %}>Thriller</option>
-                </select>
-            </div>
-            
-            <div class="btn-group">
-                <button type="submit" class="btn-primary">💾 Actualizar</button>
-                <a href="/" class="btn btn-secondary">❌ Cancelar</a>
-            </div>
-        </form>
-    </div>
+
+<h2>Editar película</h2>
+
+<form action="/editar/{{ pelicula['id'] }}" method="POST">
+
+    <label>Título:</label>
+    <input type="text" name="titulo" value="{{ pelicula['titulo'] }}" required><br>
+
+    <label>Año:</label>
+    <input type="number" name="año" value="{{ pelicula['año'] }}" required><br>
+
+    <label>Género:</label>
+    <input type="text" name="genero" value="{{ pelicula['genero'] }}" required><br>
+
+    <label><input type="checkbox" name="en_cartelera" {% if pelicula['en_cartelera'] == 1 %}checked{% endif %}> En cartelera</label><br>
+
+
+
+    <button type="submit">Guardar cambios</button>
+
+</form>
+
 </body>
 </html>
