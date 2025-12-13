@@ -1,0 +1,88 @@
+/* Fondo general con degradado cálido */
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(to bottom right, #110800, #881616, #000000);
+    color: #fff;
+    margin: 0;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+/* Título principal */
+h2 {
+    text-align: center;
+    font-size: 2.2em;
+    color: #ffe082;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    margin-bottom: 25px;
+}
+
+/* Formulario */
+form {
+    background: rgba(0,0,0,0.7);
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0.8);
+}
+
+/* Etiquetas */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    color: #ffcc80;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="number"] {
+    width: 95%;
+    padding: 10px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 6px;
+    background: #fff3e0;
+    color: #333;
+    font-size: 1em;
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    box-shadow: 0 0 5px #ff7043;
+    outline: none;
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #ff5722;
+}
+
+/* Botón */
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: linear-gradient(to right, #f57c00, #d32f2f);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 4px #ffeb3b;
+}
+
+/* Efecto cine: borde luminoso */
+form:hover {
+    box-shadow: 0 0 3px rgba(255, 193, 7, 0.9);
+}
