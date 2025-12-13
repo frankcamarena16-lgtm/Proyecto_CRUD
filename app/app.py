@@ -23,7 +23,7 @@ def crear_base_de_datos():
     cursor.execute("""CREATE TABLE IF NOT EXISTS peliculas (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     titulo TEXT NOT NULL,
-                    año TEXT NOT NULL,
+                    año DATE NOT NULL,
                     genero TEXT NOT NULL,
                     en_cartelera INTEGER DEFAULT 0
                     )
@@ -119,8 +119,21 @@ def eliminar(id):
     conn.execute('DELETE FROM peliculas WHERE id = ?', (id,))
     conn.commit()
     conn.close()
-    
+    reorganizar_ids()
     return redirect('/')
+
+
+def reorganizar_ids():
+    conn = get_db_connection()
+    peliculas = conn.execute('SELECT titulo, año, genero, en_cartelera FROM peliculas ORDER BY id').fetchall()
+    conn.execute('DELETE FROM peliculas')
+    conn.execute("DELETE FROM sqlite_sequence WHERE name='peliculas'")
+    for p in peliculas:
+        conn.execute('INSERT INTO peliculas (titulo, año, genero, en_cartelera) VALUES (?, ?, ?, ?)', p)
+    conn.commit()
+    conn.close()
+    
+
     
 if __name__ == '__main__':
     app.run(debug=True)

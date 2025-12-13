@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Editar película</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/editar_style.css') }}">
+    <link rel="icon" type="image/png" href="../static/img/favicon.png">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
     <input type="text" name="titulo" value="{{ pelicula['titulo'] }}" required><br>
 
     <label>Año:</label>
-    <input type="number" name="año" value="{{ pelicula['año'] }}" required><br>
+    <input type="number" name="año" min="1900" max="2025" value="{{ pelicula['año'] }}" required><br>
 
     <label>Género:</label>
     <input type="text" name="genero" value="{{ pelicula['genero'] }}" required><br>

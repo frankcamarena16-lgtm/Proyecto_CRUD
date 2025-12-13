@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Película</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/agregar_style.css') }}">
+    <link rel="icon" type="image/png" href="../static/img/favicon.png">
     
 </head>
 <body>
@@ -19,7 +20,7 @@
             
             <div class="form-group">
                 <label for="año">Año:</label>
-                <input type="text" id="año" name="año" required>
+                <input type="number" id="año" name="año" min="1900" max="2025" required>
             </div>
             
             <div class="form-group">
