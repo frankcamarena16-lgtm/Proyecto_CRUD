@@ -1,6 +1,6 @@
 # Proyecto académico (CRUD) Python intermedio ITLA.
 
-# 🎬 MovieCenter – Cartelera de Películas (CRUD)
+## 🎬 MovieCenter – Cartelera de Películas (CRUD)
 
 Aplicación web CRUD para la gestión de una cartelera de películas.
 Permite agregar, visualizar, editar y eliminar películas desde una interfaz sencilla y clara.
@@ -23,5 +23,5 @@ Permite agregar, visualizar, editar y eliminar películas desde una interfaz sen
 
 ✍️ Desarrolladores
 
-Aderson Martinez (BackEnd)
+Aderson Martinez (BackEnd)-
 Frank Camarena (FrontEnd)
