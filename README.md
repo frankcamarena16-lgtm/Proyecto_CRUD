@@ -23,5 +23,5 @@ Permite agregar, visualizar, editar y eliminar películas desde una interfaz sen
 
 ✍️ Desarrolladores
 
-Aderson Martinez (BackEnd)-
+Aderson Martinez (BackEnd) AND
 Frank Camarena (FrontEnd)
